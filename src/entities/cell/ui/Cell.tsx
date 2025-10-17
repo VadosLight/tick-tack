@@ -24,31 +24,51 @@ export const Cell = (props: CellProps) => {
       >
         <boxGeometry args={[0.9, 0.1, 0.9]} />
         <meshStandardMaterial
-          color={hovered ? "#4a90e2" : "#2c3e50"}
-          metalness={0.3}
-          roughness={0.4}
+          color={hovered ? "#00d4ff" : "#1e3a5f"}
+          emissive={hovered ? "#00d4ff" : "#000000"}
+          emissiveIntensity={hovered ? 0.3 : 0}
+          metalness={0.8}
+          roughness={0.2}
         />
       </mesh>
 
       {/* Крестик */}
       {value === "X" && (
-        <group position={[0, 0.3, 0]}>
-          <mesh rotation={[0, 0, Math.PI / 4]}>
-            <boxGeometry args={[0.1, 0.8, 0.1]} />
-            <meshStandardMaterial color="#e74c3c" />
+        <group position={[0, 0.05, 0]} rotation={[0, 0, 0]}>
+          <mesh rotation={[Math.PI / 2, 0, Math.PI / 4]}>
+            <boxGeometry args={[0.15, 0.7, 0.15]} />
+            <meshStandardMaterial
+              color="#ff0080"
+              emissive="#ff0080"
+              emissiveIntensity={0.5}
+              metalness={0.3}
+              roughness={0.4}
+            />
           </mesh>
-          <mesh rotation={[0, 0, -Math.PI / 4]}>
-            <boxGeometry args={[0.1, 0.8, 0.1]} />
-            <meshStandardMaterial color="#e74c3c" />
+          <mesh rotation={[Math.PI / 2, 0, -Math.PI / 4]}>
+            <boxGeometry args={[0.15, 0.7, 0.15]} />
+            <meshStandardMaterial
+              color="#ff0080"
+              emissive="#ff0080"
+              emissiveIntensity={0.5}
+              metalness={0.3}
+              roughness={0.4}
+            />
           </mesh>
         </group>
       )}
 
       {/* Нолик */}
       {value === "O" && (
-        <mesh position={[0, 0.3, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.3, 0.08, 16, 32]} />
-          <meshStandardMaterial color="#3498db" />
+        <mesh position={[0, 0.05, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.3, 0.1, 8, 16]} />
+          <meshStandardMaterial
+            color="#00ffff"
+            emissive="#00ffff"
+            emissiveIntensity={0.5}
+            metalness={0.3}
+            roughness={0.4}
+          />
         </mesh>
       )}
     </group>
