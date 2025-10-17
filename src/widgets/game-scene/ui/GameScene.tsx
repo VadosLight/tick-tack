@@ -1,7 +1,7 @@
 import { OrbitControls, Stars } from "@react-three/drei";
 import { GameBoard } from "@/entities/game-board";
 import { Canvas } from "@/shared/ui/canvas";
-import { PixelBackground } from "@/shared/ui/pixel-background";
+// import { PixelBackground } from "@/shared/ui/pixel-background";
 import { PixelGrid } from "@/shared/ui/pixel-grid";
 import type { GameBoard as GameBoardType } from "@/shared/types";
 
@@ -17,7 +17,7 @@ export const GameScene = (props: GameSceneProps) => {
     <Canvas className="game-scene">
       {/* 8-bit фон */}
       <color attach="background" args={["#0a0e27"]} />
-      <PixelBackground animated />
+      {/* <PixelBackground animated /> */}
 
       {/* Пиксельные звезды */}
       <Stars

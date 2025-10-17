@@ -40,7 +40,7 @@ export const Cell = (props: CellProps) => {
             <meshStandardMaterial
               color="#ff0080"
               emissive="#ff0080"
-              emissiveIntensity={0.5}
+              emissiveIntensity={0.2}
               metalness={0.3}
               roughness={0.4}
             />
@@ -50,7 +50,7 @@ export const Cell = (props: CellProps) => {
             <meshStandardMaterial
               color="#ff0080"
               emissive="#ff0080"
-              emissiveIntensity={0.5}
+              emissiveIntensity={0.2}
               metalness={0.3}
               roughness={0.4}
             />
@@ -65,7 +65,7 @@ export const Cell = (props: CellProps) => {
           <meshStandardMaterial
             color="#00ffff"
             emissive="#00ffff"
-            emissiveIntensity={0.5}
+            emissiveIntensity={0.2}
             metalness={0.3}
             roughness={0.4}
           />
