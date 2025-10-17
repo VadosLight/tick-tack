@@ -1,0 +1,107 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+}
+
+.container {
+    text-align: center;
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+    background: linear-gradient(45deg, #00d4ff, #ff0080);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #94a3b8;
+    margin-bottom: 32px;
+    font-family: 'Courier New', monospace;
+}
+
+.difficultyList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.difficultyItem {
+    padding: 20px;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    font-family: 'Courier New', monospace;
+}
+
+.difficultyItem:hover {
+    border-color: #00d4ff;
+    background: rgba(0, 212, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.difficultyItem.selected {
+    border-color: #ff0080;
+    background: rgba(255, 0, 128, 0.2);
+    box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
+}
+
+.difficultyLabel {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.difficultyDescription {
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+.buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirmButton {
+    min-width: 160px;
+}
+
+.backButton {
+    min-width: 120px;
+}

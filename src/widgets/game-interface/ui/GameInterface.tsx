@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { GameScene } from "@/widgets/game-scene";
 import { MainMenu } from "@/features/main-menu";
+import { DifficultySelector } from "@/features/difficulty-selector";
 import {
   checkWinner,
   isBoardFull,
@@ -21,7 +22,7 @@ export type GameInterfaceProps = Record<string, never>;
 export const GameInterface = () => {
   const [gameState, setGameState] = useState<GameState>("menu");
   const [gameMode, setGameMode] = useState<GameMode | null>(null);
-  const [botDifficulty] = useState<BotDifficulty>("medium");
+  const [botDifficulty, setBotDifficulty] = useState<BotDifficulty>("medium");
   const [board, setBoard] = useState<GameBoard>([
     [null, null, null],
     [null, null, null],
@@ -33,8 +34,15 @@ export const GameInterface = () => {
 
   const handleGameModeSelect = (mode: GameMode) => {
     setGameMode(mode);
-    setGameState("playing");
-    // Сброс игрового поля
+    if (mode === "vs-bot") {
+      setGameState("select-difficulty");
+    } else {
+      setGameState("playing");
+      resetGame();
+    }
+  };
+
+  const resetGame = () => {
     setBoard([
       [null, null, null],
       [null, null, null],
@@ -43,6 +51,22 @@ export const GameInterface = () => {
     setCurrentPlayer("X");
     setWinner(null);
     setIsBotThinking(false);
+  };
+
+  const handleDifficultyConfirm = () => {
+    setGameState("playing");
+    resetGame();
+  };
+
+  const handleBackToMenu = () => {
+    setGameState("menu");
+    setGameMode(null);
+    setWinner(null);
+    setIsBotThinking(false);
+  };
+
+  const handleBackToModeSelect = () => {
+    setGameState("menu");
   };
 
   const makeMove = (
@@ -129,23 +153,13 @@ export const GameInterface = () => {
     }
   };
 
-  const handleBackToMenu = () => {
-    setGameState("menu");
-    setGameMode(null);
-    setWinner(null);
-    setIsBotThinking(false);
-  };
-
   const handleNewGame = () => {
-    setGameState("playing");
-    setBoard([
-      [null, null, null],
-      [null, null, null],
-      [null, null, null],
-    ]);
-    setCurrentPlayer("X");
-    setWinner(null);
-    setIsBotThinking(false);
+    if (gameMode === "vs-bot") {
+      setGameState("select-difficulty");
+    } else {
+      setGameState("playing");
+      resetGame();
+    }
   };
 
   return (
@@ -158,6 +172,15 @@ export const GameInterface = () => {
       {/* Интерфейс поверх сцены */}
       {gameState === "menu" && (
         <MainMenu onGameModeSelect={handleGameModeSelect} />
+      )}
+
+      {gameState === "select-difficulty" && (
+        <DifficultySelector
+          selectedDifficulty={botDifficulty}
+          onDifficultyChange={setBotDifficulty}
+          onConfirm={handleDifficultyConfirm}
+          onBack={handleBackToModeSelect}
+        />
       )}
 
       {gameState === "playing" && (
