@@ -166,7 +166,11 @@ export const GameInterface = () => {
     <>
       {/* 3D сцена */}
       <div style={{ width: "100vw", height: "100vh" }}>
-        <GameScene board={board} onCellClick={handleCellClick} />
+        <GameScene
+          board={board}
+          onCellClick={handleCellClick}
+          winner={winner === "draw" ? null : winner}
+        />
       </div>
 
       {/* Интерфейс поверх сцены */}

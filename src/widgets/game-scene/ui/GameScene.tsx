@@ -8,10 +8,11 @@ import type { GameBoard as GameBoardType } from "@/shared/types";
 export type GameSceneProps = {
   board: GameBoardType;
   onCellClick?: (row: number, col: number) => void;
+  winner?: "X" | "O" | null;
 };
 
 export const GameScene = (props: GameSceneProps) => {
-  const { board, onCellClick } = props;
+  const { board, onCellClick, winner } = props;
 
   return (
     <Canvas className="game-scene">
@@ -47,7 +48,7 @@ export const GameScene = (props: GameSceneProps) => {
       <PixelGrid />
 
       {/* Игровое поле */}
-      <GameBoard board={board} onCellClick={onCellClick} />
+      <GameBoard board={board} onCellClick={onCellClick} winner={winner} />
 
       {/* Управление камерой */}
       <OrbitControls

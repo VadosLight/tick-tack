@@ -1,13 +1,15 @@
 import { Cell } from "@/entities/cell";
+import { WinLine } from "@/entities/win-line";
 import type { GameBoard as GameBoardType } from "@/shared/types";
 
 export type GameBoardProps = {
   board: GameBoardType;
   onCellClick?: (row: number, col: number) => void;
+  winner?: "X" | "O" | null;
 };
 
 export const GameBoard = (props: GameBoardProps) => {
-  const { board, onCellClick } = props;
+  const { board, onCellClick, winner } = props;
 
   return (
     <group>
@@ -119,6 +121,9 @@ export const GameBoard = (props: GameBoardProps) => {
         args={[3.3, 3, "#00d4ff", "#1a508b"]}
         position={[0, -0.05, 0]}
       />
+
+      {/* Выигрышная линия */}
+      <WinLine board={board} winner={winner ?? null} />
     </group>
   );
 };
