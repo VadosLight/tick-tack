@@ -1,5 +1,5 @@
 import { Canvas as R3FCanvas } from "@react-three/fiber";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export type CanvasProps = {
   children: ReactNode;
