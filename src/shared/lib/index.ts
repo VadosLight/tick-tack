@@ -7,3 +7,5 @@ export {
   getEasyBotMove,
   getMediumBotMove,
 } from './game-logic';
+
+export { useSound } from './use-sound';

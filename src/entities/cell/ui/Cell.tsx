@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Mesh } from "three";
+import { useSound } from "@/shared/lib";
 import type { CellValue } from "@/shared/types";
-
+import smashSound from "../assets/smash.mp3";
 export type CellProps = {
   position: [number, number, number];
   value: CellValue;
@@ -12,6 +13,16 @@ export const Cell = (props: CellProps) => {
   const { position, value, onClick } = props;
   const meshRef = useRef<Mesh>(null);
   const [hovered, setHovered] = useState(false);
+  const [previousValue, setPreviousValue] = useState<CellValue>(null);
+  const { play: playSmashSound } = useSound(smashSound, 0.3, false);
+
+  // Воспроизводим звук при установке фигуры
+  useEffect(() => {
+    if (value && !previousValue) {
+      playSmashSound();
+    }
+    setPreviousValue(value);
+  }, [value, previousValue, playSmashSound]);
 
   return (
     <group position={position}>
