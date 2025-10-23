@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { Button } from "@/shared/ui/button";
+import { useSound, SOUNDS } from "@/shared/lib";
 import type { GameMode } from "@/shared/types";
 import styles from "../MainMenu.module.css";
 
@@ -9,6 +11,28 @@ export type MainMenuProps = {
 export const MainMenu = (props: MainMenuProps) => {
   const { onGameModeSelect } = props;
 
+  // Звуки для меню
+  const { play: playMenuMusic, stop: stopMenuMusic } = useSound(
+    SOUNDS.MENU_MUSIC,
+    0.3,
+    true
+  );
+  const { play: playStartGame } = useSound(SOUNDS.START_GAME, 0.5, false);
+
+  // Воспроизводим музыку меню при загрузке
+  useEffect(() => {
+    playMenuMusic();
+
+    return () => {
+      stopMenuMusic();
+    };
+  }, [playMenuMusic, stopMenuMusic]);
+
+  const handleGameModeSelect = (mode: GameMode) => {
+    playStartGame();
+    onGameModeSelect(mode);
+  };
+
   return (
     <div className={styles.overlay}>
       <div className={styles.container}>
@@ -18,13 +42,16 @@ export const MainMenu = (props: MainMenuProps) => {
 
         {/* Меню */}
         <div className={styles.menu}>
-          <Button variant="primary" onClick={() => onGameModeSelect("vs-bot")}>
+          <Button
+            variant="primary"
+            onClick={() => handleGameModeSelect("vs-bot")}
+          >
             🤖 Играть с ботом
           </Button>
 
           <Button
             variant="secondary"
-            onClick={() => onGameModeSelect("vs-friend")}
+            onClick={() => handleGameModeSelect("vs-friend")}
           >
             👥 Играть с другом
           </Button>

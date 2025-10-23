@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
+import { useSound, SOUNDS } from "@/shared/lib";
 import type { GameBoard } from "@/shared/types";
 
 export type WinLineProps = {
@@ -10,13 +11,15 @@ export type WinLineProps = {
 export const WinLine = (props: WinLineProps) => {
   const { board, winner } = props;
   const [animationProgress, setAnimationProgress] = useState(0);
+  const { play: playWinSound } = useSound(SOUNDS.WIN_SOUND, 0.7, false);
 
   // Запуск анимации при появлении победителя
   useEffect(() => {
     if (winner) {
       setAnimationProgress(0);
+      playWinSound();
     }
-  }, [winner]);
+  }, [winner, playWinSound]);
 
   // Анимация вытягивания линии
   useFrame((state) => {

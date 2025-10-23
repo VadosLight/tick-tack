@@ -9,3 +9,4 @@ export {
 } from './game-logic';
 
 export { useSound } from './use-sound';
+export { SOUNDS } from './sounds';

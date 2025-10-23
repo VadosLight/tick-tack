@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect } from "react";
 import { Mesh } from "three";
-import { useSound } from "@/shared/lib";
+import { useSound, SOUNDS } from "@/shared/lib";
 import type { CellValue } from "@/shared/types";
-import smashSound from "../assets/smash.mp3";
+// import smashSound from "../assets/smash.mp3";
 export type CellProps = {
   position: [number, number, number];
   value: CellValue;
@@ -14,22 +14,38 @@ export const Cell = (props: CellProps) => {
   const meshRef = useRef<Mesh>(null);
   const [hovered, setHovered] = useState(false);
   const [previousValue, setPreviousValue] = useState<CellValue>(null);
-  const { play: playSmashSound } = useSound(smashSound, 0.3, false);
+  // const { play: playSmashSound } = useSound(smashSound, 0.3, false);
+  const { play: playCrossSound } = useSound(SOUNDS.CROSS_SOUND, 0.4, false);
+  const { play: playCircleSound } = useSound(SOUNDS.CIRCLE_SOUND, 0.4, false);
+  const { play: playClickSound } = useSound(SOUNDS.CLICK_NORMAL, 0.3, false);
 
   // Воспроизводим звук при установке фигуры
   useEffect(() => {
     if (value && !previousValue) {
-      playSmashSound();
+      // playSmashSound();
+      // Воспроизводим специфичный звук для крестика или нолика
+      if (value === "X") {
+        playCrossSound();
+      } else if (value === "O") {
+        playCircleSound();
+      }
     }
     setPreviousValue(value);
-  }, [value, previousValue, playSmashSound]);
+  }, [value, previousValue, playCrossSound, playCircleSound]);
+
+  const handleClick = () => {
+    if (onClick) {
+      playClickSound();
+      onClick();
+    }
+  };
 
   return (
     <group position={position}>
       {/* Базовая клетка */}
       <mesh
         ref={meshRef}
-        onClick={onClick}
+        onClick={handleClick}
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
       >

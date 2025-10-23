@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GameScene } from "@/widgets/game-scene";
 import { MainMenu } from "@/features/main-menu";
 import { DifficultySelector } from "@/features/difficulty-selector";
@@ -8,6 +8,8 @@ import {
   getBestMove,
   getEasyBotMove,
   getMediumBotMove,
+  useSound,
+  SOUNDS,
 } from "@/shared/lib";
 import type {
   GameBoard,
@@ -31,6 +33,24 @@ export const GameInterface = () => {
   const [currentPlayer, setCurrentPlayer] = useState<"X" | "O">("X");
   const [winner, setWinner] = useState<"X" | "O" | "draw" | null>(null);
   const [isBotThinking, setIsBotThinking] = useState(false);
+
+  // Звуки для игры
+  const { play: playGameMusic, stop: stopGameMusic } = useSound(
+    SOUNDS.GAME_MUSIC,
+    0.2,
+    true
+  );
+  const { play: playWinSound } = useSound(SOUNDS.WIN_SOUND, 0.6, false);
+  const { play: playLoseSound } = useSound(SOUNDS.LOSE_SOUND, 0.6, false);
+
+  // Воспроизводим музыку игры при начале игры
+  useEffect(() => {
+    if (gameState === "playing") {
+      playGameMusic();
+    } else {
+      stopGameMusic();
+    }
+  }, [gameState, playGameMusic, stopGameMusic]);
 
   const handleGameModeSelect = (mode: GameMode) => {
     setGameMode(mode);
@@ -90,6 +110,12 @@ export const GameInterface = () => {
     if (gameWinner) {
       setWinner(gameWinner);
       setGameState("game-over");
+      // Воспроизводим звук победы/поражения
+      if (gameWinner === "X") {
+        playWinSound();
+      } else {
+        playLoseSound();
+      }
       return true;
     }
     if (isBoardFull(board)) {
