@@ -21,6 +21,7 @@ export const MainMenu = (props: MainMenuProps) => {
 
   // Воспроизводим музыку меню при загрузке
   useEffect(() => {
+    console.log("playMenuMusic");
     playMenuMusic();
 
     return () => {

@@ -1,6 +1,7 @@
 import { Button } from "@/shared/ui/button";
 import type { BotDifficulty } from "@/shared/types";
 import styles from "../DifficultySelector.module.css";
+import { SOUNDS, useSound } from "@/shared/lib";
 
 export type DifficultySelectorProps = {
   selectedDifficulty: BotDifficulty;
@@ -11,6 +12,12 @@ export type DifficultySelectorProps = {
 
 export const DifficultySelector = (props: DifficultySelectorProps) => {
   const { selectedDifficulty, onDifficultyChange, onConfirm, onBack } = props;
+  const { play: playClickSound } = useSound(SOUNDS.CLICK_NORMAL, 0.5, false);
+
+  const handleDifficultyChange = (difficulty: BotDifficulty) => {
+    playClickSound();
+    onDifficultyChange(difficulty);
+  };
 
   const difficulties: {
     value: BotDifficulty;
@@ -43,7 +50,7 @@ export const DifficultySelector = (props: DifficultySelectorProps) => {
               className={`${styles.difficultyItem} ${
                 selectedDifficulty === difficulty.value ? styles.selected : ""
               }`}
-              onClick={() => onDifficultyChange(difficulty.value)}
+              onClick={() => handleDifficultyChange(difficulty.value)}
             >
               <div className={styles.difficultyLabel}>{difficulty.label}</div>
               <div className={styles.difficultyDescription}>

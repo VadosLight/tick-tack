@@ -1,3 +1,4 @@
+import { SOUNDS, useSound } from "@/shared/lib";
 import styles from "./Button.module.css";
 
 export type ButtonProps = {
@@ -16,7 +17,14 @@ export const Button = (props: ButtonProps) => {
     disabled = false,
     className = "",
   } = props;
+  const { play: playClickSound } = useSound(SOUNDS.CLICK_NORMAL, 0.3, false);
 
+  const handleClick = () => {
+    if (onClick) {
+      playClickSound();
+      onClick();
+    }
+  };
   const getVariantClass = () => {
     switch (variant) {
       case "primary":
@@ -31,7 +39,7 @@ export const Button = (props: ButtonProps) => {
   return (
     <button
       className={`${styles.button} ${getVariantClass()} ${className}`}
-      onClick={onClick}
+      onClick={handleClick}
       disabled={disabled}
     >
       {children}

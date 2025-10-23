@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { GameScene } from "@/widgets/game-scene";
 import { MainMenu } from "@/features/main-menu";
 import { DifficultySelector } from "@/features/difficulty-selector";
+import { SoundInit } from "@/features/sound-init";
 import {
   checkWinner,
   isBoardFull,
@@ -22,7 +23,7 @@ import styles from "../GameInterface.module.css";
 export type GameInterfaceProps = Record<string, never>;
 
 export const GameInterface = () => {
-  const [gameState, setGameState] = useState<GameState>("menu");
+  const [gameState, setGameState] = useState<GameState>("sound-init");
   const [gameMode, setGameMode] = useState<GameMode | null>(null);
   const [botDifficulty, setBotDifficulty] = useState<BotDifficulty>("medium");
   const [board, setBoard] = useState<GameBoard>([
@@ -76,6 +77,10 @@ export const GameInterface = () => {
   const handleDifficultyConfirm = () => {
     setGameState("playing");
     resetGame();
+  };
+
+  const handleSoundEnabled = () => {
+    setGameState("menu");
   };
 
   const handleBackToMenu = () => {
@@ -200,6 +205,10 @@ export const GameInterface = () => {
       </div>
 
       {/* Интерфейс поверх сцены */}
+      {gameState === "sound-init" && (
+        <SoundInit onSoundEnabled={handleSoundEnabled} />
+      )}
+
       {gameState === "menu" && (
         <MainMenu onGameModeSelect={handleGameModeSelect} />
       )}
