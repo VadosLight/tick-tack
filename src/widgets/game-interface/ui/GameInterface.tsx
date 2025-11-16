@@ -43,6 +43,7 @@ export const GameInterface = () => {
   );
   const { play: playWinSound } = useSound(SOUNDS.WIN_SOUND, 0.6, false);
   const { play: playLoseSound } = useSound(SOUNDS.LOSE_SOUND, 0.6, false);
+  const { play: playEqualSound } = useSound(SOUNDS.EQUAL_SOUND, 0.6, false);
 
   // Воспроизводим музыку игры при начале игры
   useEffect(() => {
@@ -126,6 +127,7 @@ export const GameInterface = () => {
     if (isBoardFull(board)) {
       setWinner("draw");
       setGameState("game-over");
+      playEqualSound();
       return true;
     }
     return false;
